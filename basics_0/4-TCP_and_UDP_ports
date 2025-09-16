@@ -1,3 +1,14 @@
 #!/usr/bin/env bash
+# 4-TCP_and_UDP_ports (ss version)
 
-netstat -lpn
+if [[ $EUID -ne 0 ]]; then
+  echo "This script must be run as root." >&2
+  exit 1
+fi
+
+echo "Active Internet connections (only servers)"
+ss -lntu -p
+
+echo
+echo "Active UNIX domain sockets (only servers)"
+ss -lx -p
