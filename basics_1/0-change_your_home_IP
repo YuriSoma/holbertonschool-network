@@ -1,0 +1,17 @@
+#!/bin/bash
+# Script to update /etc/hosts so that:
+# - localhost resolves to 127.0.0.2
+# - facebook.com resolves to 8.8.8.8
+
+# Backup the original hosts file (only once)
+if [ ! -f /etc/hosts.bak ]; then
+    sudo cp /etc/hosts /etc/hosts.bak
+fi
+
+# Remove existing localhost and facebook.com entries (if any)
+sudo sed -i '/\slocalhost$/d' /etc/hosts
+sudo sed -i '/\sfacebook\.com$/d' /etc/hosts
+
+# Add the new entries
+echo "127.0.0.2 localhost" | sudo tee -a /etc/hosts > /dev/null
+echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts > /dev/null
